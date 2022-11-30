@@ -1,0 +1,125 @@
+#include <iostream>
+#include <stdlib.h>
+
+/* run this program using the console pauser or add your own getch, system("pause") or input loop */
+
+int main(int argc, char** argv){
+	
+	
+	int l , c;
+	char tabuleiro[3][3];
+	int linha, coluna;
+	int jogador;
+	int vitoria;
+	int jogadas;
+	int opcao;
+	
+	//como inicializar nossa estrutura de dados?
+	do{
+		jogador = 1;
+		vitoria = 0;
+		jogadas = 0;
+		for(l = 0; l < 3; l++){
+			for(c =  0; c < 3; c++){
+				tabuleiro[l][c] = ' ';
+			}
+			
+		}
+		
+		do{
+			//imprimir tabuleiro
+			printf(" 0   1   2\n\n");
+			for(l = 0; l<3; l++){
+				for(c = 0; c<3; c++){
+					printf(" %c ", tabuleiro[l][c]);
+					if(c < 2)
+						printf("|");
+					if(c == 2)
+						printf("  %d", l);
+				}
+				if(l < 2)
+					printf("\n------------");
+				printf("\n"); 
+			}
+			
+			//ler coordenadas
+			do{
+			printf("JOGADOR %d: Digite a linha e a coluna que deseja jogar: ", jogador);
+			scanf("%d%d", &linha, &coluna);
+			}while(linha < 0 || linha > 2 || coluna < 0 || coluna > 2 || tabuleiro[linha][coluna] != ' ');
+			
+			//salvar coordenadas
+			if(jogador == 1){
+				tabuleiro[linha][coluna] = '0';
+				jogador++;
+			}else{
+				tabuleiro[linha][coluna] = 'X';
+				jogador = 1;
+			}
+			jogadas++;
+			
+			//verificar ganhador por linha
+			if(tabuleiro[0][0] == '0' && tabuleiro[0][1] == '0' && tabuleiro[0][2] == '0' ||
+			   tabuleiro[1][0] == '0' && tabuleiro[1][1] == '0' && tabuleiro[1][2] == '0' ||
+			   tabuleiro[2][0] == '0' && tabuleiro[2][1] == '0' && tabuleiro[2][2] == '0'){
+			   	printf("\nO jogador 1 venceu!(por linha)\n");
+			   	vitoria = 1;
+			   }
+			   
+			   
+			if(tabuleiro[0][0] == 'X' && tabuleiro[0][1] == 'X' && tabuleiro[0][2] == 'X' ||
+			   tabuleiro[1][0] == 'X' && tabuleiro[1][1] == 'X' && tabuleiro[1][2] == 'X' ||
+			   tabuleiro[2][0] == 'X' && tabuleiro[2][1] == 'X' && tabuleiro[2][2] == 'X'){
+			   	printf("\nO jogador 2 venceu!(por linha)\n");
+			   	vitoria = 1;
+			   }
+			
+			
+			//verificar ganhador por coluna
+			if(tabuleiro[0][0] == '0' && tabuleiro[1][0] == '0' && tabuleiro[2][0] == '0' ||
+			   tabuleiro[0][1] == '0' && tabuleiro[1][1] == '0' && tabuleiro[2][1] == '0' ||
+			   tabuleiro[0][2] == '0' && tabuleiro[1][2] == '0' && tabuleiro[2][2] == '0'){
+			   	printf("\nO jogador 1 venceu!(por coluna)\n");
+			   	vitoria = 1;
+			   }
+			
+			if(tabuleiro[0][0] == 'X' && tabuleiro[1][0] == 'X' && tabuleiro[2][0] == 'X' ||
+			   tabuleiro[0][1] == 'X' && tabuleiro[1][1] == 'X' && tabuleiro[2][1] == 'X' ||
+			   tabuleiro[0][2] == 'X' && tabuleiro[1][2] == 'X' && tabuleiro[2][2] == 'X'){
+			   	printf("\nO jogador 2 venceu!(por coluna)\n");
+			   	vitoria = 1;
+			   }
+			
+			//verificar ganhador por diagonal primaria
+			if(tabuleiro[0][0] == '0' && tabuleiro[1][1] == '0' && tabuleiro[2][2] == '0'){
+				printf("\nO jogador 1 venceu!(na diagonal primaria)\n");
+				vitoria = 1;
+			}
+			
+			if(tabuleiro[0][0] == 'X' && tabuleiro[1][1] == 'X' && tabuleiro[2][2] == 'X'){
+				printf("\nO jogador 2 venceu!(na diagonal primaria)\n");
+				vitoria = 1;
+			}
+			
+			//verificar ganhador por diagonal secundaria
+			if(tabuleiro[0][2] == '0' && tabuleiro[1][1] == '0' && tabuleiro[2][0] == '0'){
+				printf("\nO jogador 1 venceu!(na diagonal secundaria)\n");
+				vitoria = 1;
+			}
+			
+			if(tabuleiro[0][2] == 'X' && tabuleiro[1][1] == 'X' && tabuleiro[2][0] == 'X'){
+				printf("\nO jogador 2 venceu!(na diagonal secundaria)\n");
+				vitoria = 1;
+			}
+			
+		}while( vitoria == 0 && jogadas<9);
+		
+		if(vitoria == 0)
+			printf("\nNINGUEM GANHOU!\n");
+		
+		printf("\nDigite 1 para jogar novamente: \n");
+		scanf("%d", &opcao);
+	}while(opcao == 1);
+	
+	return 0;
+}
